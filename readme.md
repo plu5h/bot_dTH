@@ -1,4 +1,5 @@
 ## Lancement
 
-Ouvrir [DofusDB treasure hunt](https://dofusdb.fr/fr/tools/treasure-hunt)
-Lancer Main.py puis 5 secondes pour Alt Tab sur DofusDB puis sur Dofus
+* Ouvrir [DofusDB treasure hunt](https://dofusdb.fr/fr/tools/treasure-hunt)
+* Lancer Main.py
+*  Alt-Tab sur DofusDB puis Alt-Tab sur Dofus (5 sec de delai avant le demarrage de la chasse pour pouvoir alt-tab)
