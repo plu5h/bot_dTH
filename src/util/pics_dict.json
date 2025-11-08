@@ -1,0 +1,21 @@
+{
+    "flag" : "./res/hunt/flag.png",
+    "flagChecked" : "./res/hunt/flag_checked.png",
+    "flag2" : "./res/hunt/flag2.png",
+    "coordX" : "./res/hunt/coordX.png",
+    "coordY" : "./res/hunt/coordY.png",
+    "indiceField" : "./res/hunt/indice.png",
+    "nextIndice" : "./res/hunt/nextIndice.png",
+    "buttonUp" : "./res/hunt/buttonUp.png",
+    "buttonDown" : "./res/hunt/buttonDown.png",
+    "buttonLeft" : "./res/hunt/buttonLeft.png",
+    "buttonRight" : "./res/hunt/buttonRight.png",
+    "arrowUp" : "./res/hunt/arrowUp.png",
+    "arrowDown" : "./res/hunt/arrowDown.png",
+    "arrowLeft" : "./res/hunt/arrowLeft.png",
+    "arrowRight" : "./res/hunt/arrowRight.png",
+    "depart" : "./res/hunt/depart.png",
+    "encours" : "./res/hunt/enCours.png",
+    "tmp" : "./res/hunt/tmp.png"
+    
+}

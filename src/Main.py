@@ -7,6 +7,7 @@ import random
 from PIL import ImageGrab
 
 from src.scripts.actions import *
+from src.scripts.imageprocessing import *
 
 keepGoing=True
 first=True

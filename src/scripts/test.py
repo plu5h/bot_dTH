@@ -1,20 +1,17 @@
-import pip
-import time
-import json
-import numpy as np
-import pyautogui as pg
-import cv2
-import imagehash
 from PIL import ImageGrab
 from PIL import Image
-import unidecode
+import json
+import pyautogui as pg
 import pytesseract
-
-#-----------VARS-----------------------
+import cv2
+import unidecode
+import time
+import numpy as np
 
 pg.FAILSAFE = False
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
+CONFIDENCE = 0.8
 
 with open("./src/util/pics_dict.json") as json_file:
     pics_dict = json.load(json_file)
@@ -25,35 +22,6 @@ with open('./src/util/indicesDictionnary.json') as json_file:
 #I use "Départ" and "en cours" to find the x axis value at which the indice is starting and ending
 indiceX1=pg.locateOnScreen(pics_dict["depart"]).left
 indiceX2=pg.locateOnScreen(pics_dict["encours"]).left
-
-
-#-------------FUNCTIONS-----------------
-
-def findDirection():
-    pos = pg.locateOnScreen(pics_dict["flag"])
-    print(pos)
-    res=""
-    try:
-        pg.locateOnScreen(pics_dict["arrowUp"],[0,pos.top,pos.width,pos.top+pos.height])
-        res = "Up"
-    except: pass
-        
-    try:
-        pg.locateOnScreen(pics_dict["arrowDown"],[0,pos.top,pos.width,pos.top+pos.height])
-        res = "Down"
-    except: pass
-    
-    try:
-        pg.locateOnScreen(pics_dict["arrowRight"],[0,pos.top,pos.width,pos.top+pos.height])
-        res = "Right"
-    except: pass
-    try:
-        pg.locateOnScreen(pics_dict["arrowLeft"],[0,pos.top,pos.width,pos.top+pos.height])
-        res = "Left"
-    except: pass
-
-    return res
-
 
 def findIndice():
     try:
@@ -74,3 +42,6 @@ def getText(cap):
         cv2.cvtColor(np.array(cap), cv2.COLOR_BGR2GRAY),
         config="--psm 10")
     return text
+
+
+print(findIndice())
