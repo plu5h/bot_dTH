@@ -1,70 +1,68 @@
-import pyautogui as pg
-import time
-import pytesseract
-import numpy as np
-import cv2
-import random
-from PIL import ImageGrab
+import threading
+from scripts import GUI
+from scripts import imageprocessing
+from scripts import actions
 
-from src.scripts.actions import *
-from src.scripts.imageprocessing import *
 
-keepGoing=True
-first=True
-coords:list[str]
+class Manager():
+    def __init__(self, controller):
+        self.stop = False
+        self.state = 1
+        self.sleepTime = 0.1
+        self.firstIndice = True
 
-while keepGoing:
-    if first: 
-        print('5 secondes pour AltTab sur Dofus')
-        time.sleep(5)
-    try:
-        time.sleep(1)
-        indice=findIndice()
-        if(indice.split(' ')[0] == 'Phorreur'):
-            keepGoing=False
-            print('Phorreur')
-            pg.keyDown('alt')
-            pg.press('tab')
-            pg.press('tab')
-            pg.keyUp('alt')
-            break
-        direction=findDirection()
-        if first:
-            coords=scrapCoord()
-            altTab()
-            print("first")
-            enterCoord(coords)
-        else:altTab()
-        clickDirection(direction)
-        enterIndice(indice)
-        distance=findDistance()
-        altTab()
-        for i in range(int(distance)):
-            time.sleep(0.5)
-            coords=scrapCoord()     
-            moveHeroDir(direction)
-            timeout=time.time()+30
-            while(comparePos(coords,scrapCoord())):
-                if(time.time()>timeout):
-                    print("impossible de passer à la carte suivante")
-                    raise Exception()
-        try:
-            clickOn(flag)
-            time.sleep(1)
-        except:
-            try:
-                time.sleep(1)
-                clickOn(flag2)
-            except:
-                keepGoing=False
-                print('proutezer')
-                break
-    except Exception as err:
-        keepGoing=False
-        print('General quit: ', err)
-        pg.keyDown('alt')
-        pg.press('tab')
-        pg.press('tab')
-        pg.keyUp('alt')
-        break
-    first=False
+    def __del__(self):
+        self.stop = True
+        self.mainthread.join()
+
+    def Shutdown(self):
+        self.c.__del__()
+        self.__del__()
+        self.gui.Kill()
+
+    def setGUI(self, gui):
+        self.gui = gui
+
+    def RunThread(self):
+        self.mainthread = threading.Thread(target=self.Hunt)
+        self.mainthread.start()
+
+#states: 
+#0 : tp to hunt and launch it then tp to begining (and walk to it if needed)
+#1 : do the hunt
+#2 : fight
+#3 : stop
+
+
+    def Hunt(self):
+        while True and not self.stop :
+            if self.State == 1 :
+                try :
+                    indice=imageprocessing.findIndice()
+                    if(indice.split(' ')[0] == 'Phorreur'):
+                        #TODO hold z to check phorreur name while going forward
+
+                        self.State=3
+                        print('Phorreur')
+                        self.gui.UpdateText("Phorreur detected, take control")
+                        continue
+                    direction=imageprocessing.findDirection()
+                    if self.firstIndice:
+                        coords=actions.scrapCoord()
+                        actions.enterCoord(coords)
+                        self.firstIndice=False
+                    actions.clickDirection(direction)
+                    actions.enterIndice(indice)
+                    actions.pasteTravel()
+                    actions.clickOn(actions.pics_dict["coordCenter"])
+                    actions.waitForArrival()
+
+
+                        
+                except:
+                    pass
+                
+
+    def RunLoop(self):
+        return (self.c.State == 2)
+    

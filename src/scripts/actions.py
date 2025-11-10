@@ -38,6 +38,7 @@ def clickOn(name):
 
 
 def moveHeroDir(dir):
+    #TODO mettre les shortcuts si utilisé
     if dir == 'left':
         pg.moveTo(1, random.randint(650, 750))
     elif dir == 'right':
@@ -49,27 +50,21 @@ def moveHeroDir(dir):
     pg.click()
 
 
-def altTab():
-    pg.keyDown('alt')
-    pg.press('tab')
-    pg.keyUp('alt')
-
-
 
 def clickDirection(dir):
-    if (dir == "up"):
-        clickOn(buttonUp)
-    if (dir == "down"):
-        clickOn(buttonDown)
-    if (dir == "right"):
-        clickOn(buttonRight)
-    if (dir == "left"):
-        clickOn(buttonLeft)
+    if (dir == "Up"):
+        clickOn(pics_dict["buttonUp"])
+    if (dir == "Down"):
+        clickOn(pics_dict["buttonDown"])
+    if (dir == "Right"):
+        clickOn(pics_dict["buttonRight"])
+    if (dir == "Left"):
+        clickOn(pics_dict["buttonLeft"])
 
 
 
 def enterIndice(indiceName):
-    clickOn(indiceField)
+    clickOn(pics_dict["indiceField"])
     pressText(indiceName)
     pg.move(0, 25)
     time.sleep(1)
@@ -82,21 +77,42 @@ def findDistance():
     goal = getText(cap)
     return goal
 
+def pasteTravel():
+    pos = pg.locateCenterOnScreen(pics_dict["chat"], confidence=CONFIDENCE)
+    pg.moveTo(pos[0],pg.size()[1]-20)
+    pg.click()
+    time.sleep(0.2)
+    pg.hotkey('ctrl','v')
+    pg.press('enter')
+    time.sleep(1)
+    clickOn(pics_dict["travelOk"])
 
-def scrapCoord():
-    cap = ImageGrab.grab(bbox=(19, 65, 145, 112))
-    res = getText(cap).split(',')[:2]
-    return res
+
+def waitForArrival():
+    seen = False
+    while not seen:
+        try:
+            pos = pg.locateCenterOnScreen(pics_dict["notif"])
+            if(pos) :
+                seen = True
+        except:
+            continue
+    print("arrivé")
 
 
 def enterCoord(coords):
     try:
-        clickOn(coordX)
+        pos = pg.locateCenterOnScreen(pics_dict["coordCenter"], confidence=CONFIDENCE)
+        pg.moveTo(pos[0]-70, pos[1], duration=MOVESPEED)
+        pg.click()
         pg.keyDown('ctrl')
         pg.press('a')
         pg.keyUp('ctrl')
         pressText(coords[0])
-        clickOn(coordY)
+
+        pos = pg.locateCenterOnScreen(pics_dict["coordCenter"], confidence=CONFIDENCE)
+        pg.moveTo(pos[0]+70, pos[1], duration=MOVESPEED)
+        pg.click()
         pg.keyDown('ctrl')
         pg.press('a')
         pg.keyUp('ctrl')
