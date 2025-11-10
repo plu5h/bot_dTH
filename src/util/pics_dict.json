@@ -20,6 +20,8 @@
     "travelOk" : "./res/hunt/travel_ok.png",
     "notif" : "./res/hunt/notif.png",
     "validerEtape" : "./res/hunt/validerEtape.png",
+    "combat" : "./res/hunt/combat.png",
+    "etape" : "./res/hunt/etape.png",
     "coordCenter" : "./res/dofusDB/coordCenter.png",
     "tmp" : "./res/hunt/tmp.png"
     

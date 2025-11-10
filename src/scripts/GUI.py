@@ -15,9 +15,11 @@ class gui :
         quitLabel.pack()
 
     def start(self) :
-        def UpdateText(self, text):
-            self.mt.set(text)
-            self.SetTop()
+        self.fen.mainloop()
+        
+    def UpdateText(self, text):
+        self.mt.set(text)
+        self.SetTop()
     
     def SetTop(self):
         self.fen.attributes("-topmost", True)

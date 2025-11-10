@@ -9,6 +9,8 @@ import hashlib
 from PIL import ImageGrab
 from PIL import Image
 from PIL import ImageChops
+import logging
+import traceback
 import unidecode
 import pytesseract
 
@@ -26,11 +28,15 @@ with open('./src/util/indicesDictionnary.json') as json_file:
 
 #I use "Départ" and "en cours" to find the x axis value at which the indice is starting and ending
 try:
-    indiceX1=pg.locateOnScreen(pics_dict["depart"]).left
+    depart = pg.locateOnScreen(pics_dict["depart"])
+    indiceX1=depart.left
+except:
+    print("Départ not found be found")
+try:
     indiceX2=pg.locateOnScreen(pics_dict["encours"]).left
 except:
-    print("Départ or En Cours can't be found")
-    
+    print("en cours not found")
+
 CONFIDENCE = 0.8
 
 #-------------FUNCTIONS-----------------
@@ -38,7 +44,7 @@ CONFIDENCE = 0.8
 def findDirection():
     sure = False
     while not sure:
-        pos = pg.locateOnScreen(pics_dict["flag"])
+        pos = pg.locateOnScreen(pics_dict["flag"], confidence = 0.99)
         cap = ImageGrab.grab(bbox=(indiceX1-20, pos.top, indiceX1, pos.top+pos.height)).convert('L')
         
         hashCap = imagehash.average_hash(cap)
@@ -56,10 +62,13 @@ def findDirection():
 
     return res
 
-def isElementOnScreen(elt):
+def isElementOnScreen(elt, confidence = CONFIDENCE):
     seen = False
     try:
-        pos = pg.locateCenterOnScreen(pics_dict[elt])
+        if elt == "flag":
+            pos = pg.locateOnScreen(pics_dict[elt],confidence=confidence, region =(depart.left, depart.top,500, 500))
+        else:
+            pos = pg.locateOnScreen(pics_dict[elt],confidence=confidence)
         if(pos) :
             seen = True
     except:
@@ -67,9 +76,20 @@ def isElementOnScreen(elt):
 
     return seen
 
+def isLastEtape():
+    try:
+        pos = pg.locateOnScreen(pics_dict["etape"])
+        cap = ImageGrab.grab(bbox=(pos.left+pos.width, pos.top, pos.left+pos.width+100, pos.top+pos.height))
+        txt = getText(cap).replace('\n',"").split('/')
+        res = (int(txt[1])-int(txt[0])==0)
+    except Exception as e:
+        logging.error(traceback.format_exc())
+    
+    return res
+
 def findIndice():
     try:
-        pos = pg.locateOnScreen(pics_dict["flag"])
+        pos = pg.locateOnScreen(pics_dict["flag"], confidence=0.99)
         y1 = pos[1]
         y2 = pos[1]+pos[3]
         cap = ImageGrab.grab(bbox=(indiceX1, y1, indiceX2, y2))
@@ -79,7 +99,8 @@ def findIndice():
         if res in indicesDictionnary:
             res = indicesDictionnary[res]
         return res
-    except: pass
+    except Exception as e:
+        logging.error(traceback.format_exc())
 
 def getText(cap):
     text = pytesseract.image_to_string(

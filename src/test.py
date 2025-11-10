@@ -28,5 +28,4 @@ with open('./src/util/indicesDictionnary.json') as json_file:
     indicesDictionnary = json.load(json_file)
 
 
-actions.pasteTravel()
-
+print(imageprocessing.isLastEtape())

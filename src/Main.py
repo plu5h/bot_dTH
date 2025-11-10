@@ -1,6 +1,7 @@
 import threading
 import traceback
 import logging
+import time
 from scripts import GUI
 from scripts import imageprocessing
 from scripts import actions
@@ -54,9 +55,7 @@ class Manager():
                     direction=imageprocessing.findDirection()
                     print(direction)
                     if self.firstIndice :
-                        print("coordloop")
                         coords=imageprocessing.scrapCoord()
-                        print("coords")
                         actions.enterCoord(coords)
                         self.firstIndice=False
                     actions.clickDirection(direction)
@@ -65,24 +64,23 @@ class Manager():
                     actions.clickOn("coordCenter")
                     actions.waitForArrival()
                     
-                    stepEnded = False
+                    actions.clickOn("flag", confidence=0.99)
+                    time.sleep(0.5)
                     try:
-                        if imageprocessing.isElementOnScreen("flag"):
-                            actions.clickOn("flag")
+                        if imageprocessing.isElementOnScreen("flag", confidence = 0.99):
+                            print("tjrs un flag")
+                            pass
                         else:
-                            print("step ended1")
-                            stepEnded = True
+                            print("noflag")
+                            actions.clickOn("validerEtape")
                     except:
-                        print("step ended2")
-                        stepEnded = True
-
-                    if stepEnded:
-                        try :
+                        try:
                             actions.clickOn("validerEtape")
                         except Exception as e:
                             self.stop=True
                             logging.error(traceback.format_exc())
-                        
+
+                    time.sleep(1)
 
 
                         

@@ -94,7 +94,7 @@ def waitForArrival():
     seen = False
     while not seen:
         seen = imageprocessing.isElementOnScreen("notif")
-    print("arrivé")
+        time.sleep(1)
 
 
 def enterCoord(coords):
