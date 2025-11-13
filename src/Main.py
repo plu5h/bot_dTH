@@ -15,6 +15,7 @@ class Manager():
         self.sleepTime = 0.1
         self.keylistener = keylistener(on_press=self.on_press)
         self.keylistener.start()
+        self.doFight = True
 
     def __del__(self):
         self.stop = True
@@ -71,6 +72,7 @@ class Manager():
 
                             if firstIndice :
                                 coords=imageprocessing.scrapCoord()
+                                print(coords)
                                 actions.enterCoord(coords)
                                 firstIndice=False
                             actions.clickDirection(direction)
@@ -111,9 +113,14 @@ class Manager():
                         self.stop=True
                         logging.error(traceback.format_exc())
                 else :
-                    print("combat")
-                    pass
-                    #actions.clickOn("combat")
+                    actions.clickOn("combat")
+                    self.clickOn("pret")
+                    self.state=2
+                    
+            if self.state==2 and self.doFight:
+                if(imageprocessing.isElementOnScreen("sorts")):
+                    actions.takeCombatTurn()
+
         print("end of loop")   
         print(self.stop)      
         self.Shutdown()   

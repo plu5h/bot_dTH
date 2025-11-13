@@ -114,7 +114,9 @@ def scrapCoord():
     pos = pg.locateOnScreen(pics_dict["bonusXPLogo"], confidence=CONFIDENCE)
     cap = ImageGrab.grab(bbox=(0, pos.top, pos.left, pos.top+pos.height))
     cap.save("./res/tmp.png")
-    res = getText(cap).split('-')[0].replace(" ","").split(',')
+    txt = getText(cap)
+    
+    res=txt.split('- Niv')[0].replace(" ","").split(',')
 
     return res
 

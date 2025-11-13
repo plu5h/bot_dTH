@@ -30,5 +30,4 @@ with open('./src/util/indicesDictionnary.json') as json_file:
     indicesDictionnary = json.load(json_file)
 
 
-pos = pg.locateCenterOnScreen(pics_dict["objets"])
-pg.moveTo(pos[0], pos[1]-20)
+print(imageprocessing.scrapCoord())

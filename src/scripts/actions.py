@@ -160,3 +160,13 @@ def comparePos(pos1, pos2):
         if (pos1[i] != pos2[i]):
             return False
     return True
+
+
+def takeCombatTurn():
+    for i in range(6):
+        pos=pg.locateCenterOnScreen(pics_dict["coffre"+i], confidence=0.7)
+    for i in range(2):
+        keyboard.press("'")
+        pg.moveTo(pos)
+        pg.click
+        

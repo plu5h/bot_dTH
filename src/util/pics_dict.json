@@ -23,6 +23,8 @@
     "ZButton" : "./res/hunt/z_button.png",
     "YButton" : "./res/hunt/y_button.png",
     "objets" : "./res/hunt/objets.png",
+    "challenges" : "./res/hunt/challenges.png",
+    "pret" : "./res/hunt/pret.png",
     "validerEtape" : "./res/hunt/validerEtape.png",
     "combat" : "./res/hunt/combat.png",
     "etape" : "./res/hunt/etape.png",
