@@ -26,16 +26,6 @@ with open("./src/util/pics_dict.json") as json_file:
 with open('./src/util/indicesDictionnary.json') as json_file:
     indicesDictionnary = json.load(json_file)
 
-#I use "Départ" and "en cours" to find the x axis value at which the indice is starting and ending
-try:
-    depart = pg.locateOnScreen(pics_dict["depart"])
-    indiceX1=depart.left
-except:
-    print("Départ not found be found")
-try:
-    indiceX2=pg.locateOnScreen(pics_dict["encours"]).left
-except:
-    print("en cours not found")
 
 CONFIDENCE = 0.8
 
@@ -44,8 +34,9 @@ CONFIDENCE = 0.8
 def findDirection():
     sure = False
     while not sure:
+        depart = pg.locateOnScreen(pics_dict["depart"])
         pos = pg.locateOnScreen(pics_dict["flag"], confidence = 0.99)
-        cap = ImageGrab.grab(bbox=(indiceX1-20, pos.top, indiceX1, pos.top+pos.height)).convert('L')
+        cap = ImageGrab.grab(bbox=(depart.left-20, pos.top, depart.left, pos.top+pos.height)).convert('L')
         
         hashCap = imagehash.average_hash(cap)
         hashes =  {
@@ -66,6 +57,7 @@ def isElementOnScreen(elt, confidence = CONFIDENCE):
     seen = False
     try:
         if elt in ("flag", "flagChecked"):
+            depart = pg.locateOnScreen(pics_dict["depart"])
             pos = pg.locateOnScreen(pics_dict[elt],confidence=confidence, region =(depart.left, depart.top,500, 500))
         else:
             pos = pg.locateOnScreen(pics_dict[elt],confidence=confidence)
@@ -93,7 +85,9 @@ def findIndice():
         pos = pg.locateOnScreen(pics_dict["flag"], confidence=0.99)
         y1 = pos[1]
         y2 = pos[1]+pos[3]
-        cap = ImageGrab.grab(bbox=(indiceX1, y1, indiceX2, y2))
+        depart = pg.locateOnScreen(pics_dict["depart"])
+        encours=pg.locateOnScreen(pics_dict["encours"])
+        cap = ImageGrab.grab(bbox=(depart.left, y1, encours.left, y2))
         res = unidecode.unidecode(str(getText(cap))).replace("4","a")
         
 

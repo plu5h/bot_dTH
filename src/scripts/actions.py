@@ -154,6 +154,9 @@ def waitUntil(somepredicate, timeout, period=0.1, *args, **kwargs):
         time.sleep(period)
     return False
 
+def wait(secs,grainMax, grainMin=0):
+    time.sleep(secs+random.randint(grainMin,grainMax))
+
 
 def comparePos(pos1, pos2):
     for i in range(0, len(pos1)):
@@ -162,11 +165,27 @@ def comparePos(pos1, pos2):
     return True
 
 
+
 def takeCombatTurn():
-    for i in range(6):
-        pos=pg.locateCenterOnScreen(pics_dict["coffre"+i], confidence=0.7)
+    pos=[0,100]
+    for i in range(10):
+        try:
+            print("coffre"+str(i))
+            pos=pg.locateCenterOnScreen(pics_dict["coffre"+str(i)], confidence=0.7)
+            print(pos)
+            if pos==None:
+                pos=[0,100]
+            elif pos != [0,100]:
+                break
+        except:
+            pass
     for i in range(2):
-        keyboard.press("'")
-        pg.moveTo(pos)
-        pg.click
+        wait(0.5,1)
+        clickOn("spell")
+        pg.moveTo(pos[0],pos[1]+20)
+        wait(0.5,1)
+        pg.click()
+        wait(4,1,2)
+        clickOn("findetour")
+        wait(0.5,1)
         

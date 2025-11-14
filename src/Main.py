@@ -48,9 +48,21 @@ class Manager():
         print("starting loop")
         firstIndice=True
         actions.focusDofusWindow()
+        if imageprocessing.isElementOnScreen("sorts"):
+            print("state")
+            print(self.state)
+            self.state = 2
+            print("state")
+            print(+self.state)
+        elif imageprocessing.isElementOnScreen("depart") or imageprocessing.isLastEtape():
+            self.state=1
+        else:
+            self.state=0
         while True and not self.stop :
             
-            if self.state == 1 :
+            if self.state == 0 :
+                actions.havreSac()
+            elif self.state == 1 :
 
                 if not imageprocessing.isLastEtape():
 
@@ -113,13 +125,16 @@ class Manager():
                         self.stop=True
                         logging.error(traceback.format_exc())
                 else :
+                    time.sleep(4)
                     actions.clickOn("combat")
-                    self.clickOn("pret")
+                    actions.clickOn("challenges")
+                    actions.clickOn("pret")
                     self.state=2
                     
-            if self.state==2 and self.doFight:
+            elif self.state==2 and self.doFight:
                 if(imageprocessing.isElementOnScreen("sorts")):
                     actions.takeCombatTurn()
+                    continue
 
         print("end of loop")   
         print(self.stop)      

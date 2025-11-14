@@ -30,6 +30,20 @@
     "etape" : "./res/hunt/etape.png",
     "coordCenter" : "./res/dofusDB/coordCenter.png",
     "phorreurName" : "./res/phorreur/phorreurName.png",
+    "sorts" : "./res/hunt/sorts.png",
+    "findetour" : "./res/fight/findetour.png",
+    "spell" : "./res/fight/spell.png",
+    "coffre0" : "./res/fight/coffre0.png",
+    "coffre1" : "./res/fight/coffre1.png",
+    "coffre2" : "./res/fight/coffre2.png",
+    "coffre3" : "./res/fight/coffre3.png",
+    "coffre4" : "./res/fight/coffre4.png",
+    "coffre5" : "./res/fight/coffre5.png",
+    "coffre6" : "./res/fight/coffre6.png",
+    "coffre7" : "./res/fight/coffre7.png",
+    "coffre8" : "./res/fight/coffre8.png",
+    "coffre9" : "./res/fight/coffre9.png",
+    
     "tmp" : "./res/hunt/tmp.png"
     
 }
