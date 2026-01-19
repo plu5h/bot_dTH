@@ -18,7 +18,7 @@ TH auto farm bot using computer vision and automated computer actions in python.
 >Anyway, I'm looking for a job so read this as a motivation letter :p
 
 >[!CAUTION]
->Please note that this project is still a WIP and therefore might not work on every configuratiuon
+>Please note that this project is still a WIP and therefore might not work on every configuration
 This project uses Ganymede to fetch destinations so it is required to install and launch Ganymede first
 
 ## Requirements
